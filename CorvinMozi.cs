@@ -33,6 +33,29 @@ namespace CorvinMoziUj
         {
 
             this.Text = mozi.Termek[Mozipar].Nev + " terem";
+            if (Mozipar == 0)
+            {
+
+                Balgomb.Enabled = false;
+                Balgomb.Hide();
+
+            }
+            else if (Mozipar == mozi.Termek.Count - 1)
+            {
+
+                Jobbgomb.Enabled = false;
+                Jobbgomb.Hide();
+
+            }
+            else
+            {
+
+                Balgomb.Enabled = true;
+                Balgomb.Show();
+                Jobbgomb.Enabled = true;
+                Jobbgomb.Show();
+
+            }
             mozikep.BackgroundImage = mozi.Termek[Mozipar].Nevadokep;
             mozikep.BackgroundImageLayout = ImageLayout.Stretch;
             MoziPanel.Controls.Clear();
@@ -82,30 +105,7 @@ namespace CorvinMoziUj
 
                 }
 
-            }
-            if (Mozipar == 0)
-            {
-
-                Balgomb.Enabled = false;
-                Balgomb.Hide();
-
-            }
-            else if (Mozipar == mozi.Termek.Count - 1)
-            {
-
-                Jobbgomb.Enabled = false;
-                Jobbgomb.Hide();
-
-            }
-            else
-            {
-
-                Balgomb.Enabled = true;
-                Balgomb.Show();
-                Jobbgomb.Enabled = true;
-                Jobbgomb.Show();
-
-            }
+            }            
 
         }
 
@@ -113,10 +113,6 @@ namespace CorvinMoziUj
         {
 
             Mozipar--;
-            if (Mozipar <= 0)
-            {
-                Mozipar = mozi.Termek.Count - 1;
-            }
             PanelFriss();
 
         }
@@ -125,10 +121,6 @@ namespace CorvinMoziUj
         {
 
             Mozipar++;
-            if (Mozipar >= mozi.Termek.Count)
-            {
-                Mozipar = 0;
-            }
             PanelFriss();
 
         }
@@ -205,7 +197,6 @@ namespace CorvinMoziUj
         {
             return new string('-', 45);
         }
-
 
     }
 }

@@ -53,6 +53,7 @@
             this.Mentesgomb.TabIndex = 4;
             this.Mentesgomb.Text = "Mentés";
             this.Mentesgomb.UseVisualStyleBackColor = true;
+            this.Mentesgomb.Click += new System.EventHandler(this.MentesGomb_Click);
             // 
             // Statiszgomb
             // 
@@ -62,6 +63,7 @@
             this.Statiszgomb.TabIndex = 5;
             this.Statiszgomb.Text = "Statisztika";
             this.Statiszgomb.UseVisualStyleBackColor = true;
+            this.Statiszgomb.Click += new System.EventHandler(this.Statiszgomb_Click);
             // 
             // Jobbgomb
             // 
@@ -71,6 +73,7 @@
             this.Jobbgomb.Size = new System.Drawing.Size(89, 63);
             this.Jobbgomb.TabIndex = 3;
             this.Jobbgomb.UseVisualStyleBackColor = true;
+            this.Jobbgomb.Click += new System.EventHandler(this.Jobbgomb_Click);
             // 
             // Balgomb
             // 
@@ -80,6 +83,7 @@
             this.Balgomb.Size = new System.Drawing.Size(90, 63);
             this.Balgomb.TabIndex = 2;
             this.Balgomb.UseVisualStyleBackColor = true;
+            this.Balgomb.Click += new System.EventHandler(this.Balgomb_Click);
             // 
             // mozikep
             // 
