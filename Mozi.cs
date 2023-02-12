@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CorvinMoziUj
 {
@@ -14,43 +15,7 @@ namespace CorvinMoziUj
         List<Terem> termek = new List<Terem>();
 
         internal List<Terem> Termek { get => termek; set => termek = value; }
-
-        public bool Mentes()
-        {
-            bool siker = false;
-            try
-            {
-
-                File.Copy("CorvinMozi.csv", "CorvinMozi_" + DateTime.Now.ToString("yyyyMMdd_hhmm") + ".csv");
-                using (StreamWriter sw = new StreamWriter("CorvinMozi.csv"))
-                {
-                    foreach (Terem item in termek)
-                    {
-                        sw.WriteLine(item.Nev);
-                        sw.WriteLine(string.Join(";", item.Sorok, item.Szekek));
-                        for (int i = 0; i < item.Ulesek.GetLength(0); i++)
-                        {
-                            for (int j = 0; j < item.Ulesek.GetLength(1); j++)
-                            {
-                                sw.WriteLine(string.Join(";", i, j, item.Ulesek[i, j]));
-                            }
-                        }
-                        sw.WriteLine();
-                    }
-                }
-                siker = true;
-
-            }
-            catch (Exception ex)
-            {
-
-                return false;
-
-            }
-            return siker;
-
-        }
-
+      
         public Mozi(string forras)
         {
 
@@ -64,19 +29,20 @@ namespace CorvinMoziUj
                     {
 
                         string MoziNev = sr.ReadLine();
+                        Image nevadokep = Image.FromFile(@"kepek\" + MoziNev.Split()[0] + ".jpg");
                         string[] sor = sr.ReadLine().Split(';');
                         int sorokszama = int.Parse(sor[0]);
                         int szekekszama = int.Parse(sor[1]);
                         char[,] Ulesek = new char[sorokszama, szekekszama];
                         string ujSor = string.Empty;
-                        while ((ujSor = sr.ReadLine()) != "")
+                        while ((ujSor = sr.ReadLine()) != "" && ujSor != null)
                         {
 
                             sor = ujSor.Split(';');
-                            Ulesek[int.Parse(sor[0]) - 1, int.Parse(sor[1]) - 1] = char.Parse(sor[2]);
+                            Ulesek[int.Parse(sor[0]) - 1, int.Parse(sor[1]) - 1] = sor[2][0];
 
                         }
-                        termek.Add(new Terem(MoziNev, sorokszama, szekekszama, Ulesek));
+                        termek.Add(new Terem(MoziNev, sorokszama, szekekszama, Ulesek, nevadokep));
 
                     }
 
@@ -86,11 +52,46 @@ namespace CorvinMoziUj
             catch (IOException ex)
             {
 
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n\nA program leáll!");
                 Environment.Exit(0);
 
             }
 
+        }
+
+        public void Mentes()
+        {
+            string original = "CorvinMozi.csv";
+            string output = "Backup_" + DateTime.Now.ToString("yyyyMMddHHmm") + ".csv";
+            try
+            {
+                File.Copy(original, output, true);
+                using (StreamWriter sw = new StreamWriter(original))
+                {
+                    foreach (Terem item in termek)
+                    {
+                        sw.WriteLine(item.Nev);
+                        sw.WriteLine(string.Join(";", item.Sorok, item.Szekek));
+                        for (int i = 0; i < item.Ulesek.GetLength(0); i++)
+                        {
+                            for (int j = 0; j < item.Ulesek.GetLength(1); j++)
+                            {
+                                if (item.Ulesek[i, j] != '\0')
+                                {
+                                    sw.WriteLine(string.Join(";", i + 1, j + 1, item.Ulesek[i, j]));
+                                }
+                            }
+                        }
+                        sw.WriteLine();
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(ex.Message + "\nA mentés sikertelen!");
+                return;
+            }
+            MessageBox.Show("Az adatok mentése sikeres!");
         }
 
     }

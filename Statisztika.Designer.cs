@@ -47,9 +47,10 @@
             this.ClientSize = new System.Drawing.Size(1200, 658);
             this.Controls.Add(this.Statiszttext);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Statisztika";
             this.Text = "Statisztika";
+            this.Load += new System.EventHandler(this.Statisztika_Load);
             this.ResumeLayout(false);
 
         }
